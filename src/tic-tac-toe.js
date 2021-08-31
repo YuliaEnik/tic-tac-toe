@@ -8,6 +8,7 @@ class TicTacToe {
         [ null, null, null],
         [ null, null, null],
     ]
+    winner = null ;
 
     getCurrentPlayerSymbol() {
      return this.currentPlayer
@@ -15,16 +16,18 @@ class TicTacToe {
 
     nextTurn(rowIndex, colIndex) {
      if(this.gameField[rowIndex][colIndex]) {
-         return;
+         return ;
      }
      this.gameField[rowIndex][colIndex] = this.currentPlayer;
      this.currentPlayer = this.currentPlayer === 'x' ? 'o' : 'x';
     }
 
     isFinished(rowIndex, colIndex) {
-        if(rowIndex !== null && colIndex !== null) {
+        if(rowIndex !== null) {
             return false;
-         }  
+        } else {
+            return winner
+        }      
          
     }
 
@@ -34,7 +37,7 @@ class TicTacToe {
       }
 
 
-      let winner = null ;
+      
       for ( rowIndex = 0; rowIndex < 3; rowIndex++) {
           if (equals3(this.gameField[rowIndex][0], this.gameField[rowIndex][1], this.gameField[rowIndex][2]) ) {
               console.log(winner)
@@ -58,6 +61,7 @@ class TicTacToe {
     if (winner == null) {
         return null
     }else {
+        console.log(winner)
     return winner;
     }
     
@@ -65,7 +69,12 @@ class TicTacToe {
     }
 
     noMoreTurns() {
-
+        for (let i = 0; i < this.gameField.length; i++) {
+            for (let j = 0; j < this.gameField[i].length; j++) {
+                if (this.gameField[i][j] === null) return false;
+            }
+        }
+        return true
     }
 
     isDraw() {
@@ -73,9 +82,7 @@ class TicTacToe {
     }
 
     getFieldValue(rowIndex, colIndex) {
-        if (rowIndex > 2 || colIndex > 2 ) {
-            return null
-        }
+        
              return this.gameField[rowIndex][colIndex];
     }
 }
